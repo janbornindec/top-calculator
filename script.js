@@ -6,3 +6,22 @@ const subtract = (a,b) => a - b;
 const multiply = (a,b) => a * b;
 //divide function
 const divide = (a,b) => a / b;
+
+const operator;
+const firstNum;
+const secondNum;
+
+const operate(firstNum,secondNum,operator) {
+    if (operator === 'plus') {
+        return add();
+    } else if (operator === 'minus') {
+        return subtract();
+    } else if (operator === 'star') {
+        return multiply();
+    } else if (operator === 'backslash') {
+        return divide();
+    } else {
+        alert('Something went wrong. Please choose +, -, * or /')
+    };
+};
+
