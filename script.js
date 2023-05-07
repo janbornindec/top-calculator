@@ -44,7 +44,7 @@ let secondNum;
 
 //split equation to get two numbers
 function getNums() {
-    numbers = equation.split(/[^0-9]/);
+    numbers = equation.split(/[^0-9.]/);
     firstNum = Number(numbers[0]);
     secondNum = Number(numbers[1]);
 };
@@ -81,7 +81,10 @@ function operate() {
 const clearBtn = document.querySelector('.ac');
 
 function clear() {
-    clearBtn.addEventListener('click',() => display.textContent = '');
+    clearBtn.addEventListener('click',() => {
+        display.textContent = '';
+        equation = '';
+    });
 }
 
 //trigger all funcs
