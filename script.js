@@ -1,15 +1,15 @@
 //determine which key is clicked
 const buttons = document.querySelectorAll('button');
-const display = document.querySelector('.display')
+const display = document.querySelector('.display');
+const operators = document.querySelectorAll('.operator');
 
 function buttonListener() {
     buttons.forEach((button => {
         button.addEventListener('click', (e => {
             const key = e.target
-            const keyClass = key.getAttribute('class');
             const keyContent = key.textContent;
             const displayedNum = display.textContent;
-            if (keyClass === 'number') {
+            if (key.classList.contains('number')) {
                 console.log('Number key');
                 //if only 0 is on screen then replace it with new num
                 if (displayedNum === '0') {
@@ -17,19 +17,35 @@ function buttonListener() {
                 } else { //otherwise add new num after the existing num
                     display.textContent = displayedNum + keyContent;
                 };
-            } else if (keyClass === 'operator') {
+            } else if (key.classList.contains('operator')) {
                 console.log('Operator key');
-            } else if (keyClass === 'decimal') {
+                selectOperator(key);
+                //if only 0 is on screen or last displayed is an operator
+                if (displayedNum === '0') {
+                    display.textContent = keyContent;
+                } else { //otherwise add operator after the displayed num
+                    display.textContent = displayedNum + keyContent;
+                };
+            } else if (key.classList.contains('decimal')) {
                 console.log('Decimal key')
-            } else if (keyClass === 'ac') {
+                display.textContent = displayedNum + '.';
+            } else if (key.classList.contains('ac')) {
+                display.textContent = '';
                 console.log('Clear key')
-            } else if (keyClass === 'calculate') {
+            } else if (key.classList.contains('calculate')) {
                 console.log('Equal key')
             } else {
                 console.log('Error')
             };
         }));
     }));
+};
+
+function selectOperator(key) {
+    operators.forEach((operator) => {
+        operator.classList.remove('active');
+    });
+    key.classList.add('active');
 };
 
 buttonListener();
