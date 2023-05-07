@@ -7,35 +7,32 @@ const multiply = (a,b) => a * b;
 //divide function
 const divide = (a,b) => a / b;
 
-const displayValue = document.querySelector('.display');
-const numButtons = document.querySelectorAll('.number');
+//get selected operator
+const opButtons = document.querySelectorAll('.operator')
+let operator; 
 
-//store and display value when number button is clicked
-function displayNum() {
-    numButtons.forEach((numButton => {
-        numButton.addEventListener('click',() => {
-            displayValue.textContent += numButton.textContent;
+function displayOp() {
+    opButtons.forEach((opButton => {
+        opButton.addEventListener('click', () => {
+            operator = opButton.textContent;
+            console.log(operator);
+            display.textContent += operator;
+            equation += opButton.textContent;
         });
     }));
 };
 
-displayNum();
+//store and display value when number button is clicked
+const display = document.querySelector('.display');
+const numButtons = document.querySelectorAll('.number');
+let equation = '';
 
-/*const operator;
-const firstNum;
-const secondNum;
-
-const operate(firstNum,secondNum,operator) {
-    if (operator === 'plus') {
-        return add();
-    } else if (operator === 'minus') {
-        return subtract();
-    } else if (operator === 'multiply') {
-        return multiply();
-    } else if (operator === 'divide') {
-        return divide();
-    } else {
-        alert('Something went wrong. Please choose +, -, x or ÷')
-    };
-};*/
-
+function displayNum() {
+    numButtons.forEach((numButton => {
+        numButton.addEventListener('click',() => {
+            equation += numButton.textContent;
+            display.textContent += numButton.textContent;
+            console.log(equation);
+        });
+    }));
+};
