@@ -65,3 +65,14 @@ function chooseFunc() {
         solution = divide(firstNum,secondNum);
     }
 }
+
+//calculate the function to get solution
+const calculate = document.querySelector('.calculate');
+
+function operate() {
+    calculate.addEventListener('click',() => {
+        chooseFunc();
+        display.textContent = solution;
+        equation = '';
+    })
+};
