@@ -76,3 +76,16 @@ function operate() {
         equation = '';
     })
 };
+
+//clear display
+const clearBtn = document.querySelector('.ac');
+
+function clear() {
+    clearBtn.addEventListener('click',() => display.textContent = '');
+}
+
+//trigger all funcs
+displayOp();
+displayNum();
+operate();
+clear();
