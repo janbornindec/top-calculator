@@ -1,3 +1,30 @@
+//determine which key is clicked
+const buttons = document.querySelectorAll('button');
+
+function buttonListener() {
+    buttons.forEach((button => {
+        button.addEventListener('click', (e => {
+            const btnClass = e.target.getAttribute('class');
+            if (btnClass === 'number') {
+                console.log('Number key');
+            } else if (btnClass === 'operator') {
+                console.log('Operator key');
+            } else if (btnClass === 'decimal') {
+                console.log('Decimal key')
+            } else if (btnClass === 'ac') {
+                console.log('Clear key')
+            } else if (btnClass === 'calculate') {
+                console.log('Equal key')
+            } else {
+                console.log('Error')
+            };
+        }));
+    }));
+};
+
+buttonListener();
+
+/*
 //add function
 const add = (a,b) => a + b;
 //subtract function
@@ -9,15 +36,12 @@ const divide = (a,b) => a / b;
 
 //get selected operator
 const opButtons = document.querySelectorAll('.operator')
-let operator; 
 
 function displayOp() {
     opButtons.forEach((opButton => {
         opButton.addEventListener('click', () => {
-            operator = opButton.textContent;
-            console.log(operator);
-            display.textContent += operator;
-            equation += opButton.textContent;
+            display.textContent += opButton.textContent;
+            console.log(opButton.textContent);
         });
     }));
 };
@@ -25,14 +49,12 @@ function displayOp() {
 //store and display value when number button is clicked
 const display = document.querySelector('.display');
 const numButtons = document.querySelectorAll('.number');
-let equation = '';
 
 function displayNum() {
     numButtons.forEach((numButton => {
         numButton.addEventListener('click',() => {
-            equation += numButton.textContent;
             display.textContent += numButton.textContent;
-            console.log(equation);
+            console.log(display.textContent);
         });
     }));
 };
@@ -42,19 +64,18 @@ let numbers;
 let firstNum;
 let secondNum;
 
-//split equation to get two numbers
-function getNums() {
-    numbers = equation.split(/[^0-9.]/);
-    firstNum = Number(numbers[0]);
-    secondNum = Number(numbers[1]);
-};
+let equation;
+
+function calculator() {
+    equation = display.textContent.split(/[^0-9.]/);
+    const initialValue = equation[0];
+    const solution = equation.reduce((operator,currentvalue) => lastValue  )
+}
 
 let solution;
 
 //decide which func to use
 function chooseFunc() {
-    getNums();
-
     if (operator === '+') {
         solution = add(firstNum,secondNum);
     } else if (operator === '-') {
@@ -66,14 +87,13 @@ function chooseFunc() {
     }
 }
 
-//calculate the function to get solution
+calculate the function to get solution
 const calculate = document.querySelector('.calculate');
 
 function operate() {
     calculate.addEventListener('click',() => {
         chooseFunc();
         display.textContent = solution;
-        equation = '';
     })
 };
 
@@ -84,6 +104,9 @@ function clear() {
     clearBtn.addEventListener('click',() => {
         display.textContent = '';
         equation = '';
+        numbers = [];
+        firstNum = '';
+        secondNum = '';
     });
 }
 
@@ -91,4 +114,4 @@ function clear() {
 displayOp();
 displayNum();
 operate();
-clear();
+clear();*/
