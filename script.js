@@ -48,3 +48,20 @@ function getNums() {
     firstNum = Number(numbers[0]);
     secondNum = Number(numbers[1]);
 };
+
+let solution;
+
+//decide which func to use
+function chooseFunc() {
+    getNums();
+
+    if (operator === '+') {
+        solution = add(firstNum,secondNum);
+    } else if (operator === '-') {
+        solution = subtract(firstNum,secondNum);
+    } else if (operator === 'x') {
+        solution = multiply(firstNum,secondNum);
+    } else if (operator === '÷') {
+        solution = divide(firstNum,secondNum);
+    }
+}
