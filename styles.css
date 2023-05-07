@@ -88,3 +88,7 @@ p {
 .special {
     width: 20%;
 }
+
+.active {
+    background-color: darkgrey;
+}
