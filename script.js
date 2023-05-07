@@ -36,3 +36,15 @@ function displayNum() {
         });
     }));
 };
+
+//set var for each parts of equation
+let numbers;
+let firstNum;
+let secondNum;
+
+//split equation to get two numbers
+function getNums() {
+    numbers = equation.split(/[^0-9]/);
+    firstNum = Number(numbers[0]);
+    secondNum = Number(numbers[1]);
+};
