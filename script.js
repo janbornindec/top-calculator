@@ -1,7 +1,8 @@
-//determine which key is clicked
+const calculator = document.querySelector('.calculator');
 const buttons = document.querySelectorAll('button');
 const display = document.querySelector('.display');
 const operators = document.querySelectorAll('.operator');
+let previousKeyType; //setting a var for the last key that has been clicked
 
 function buttonListener() {
     buttons.forEach((button => {
@@ -11,29 +12,39 @@ function buttonListener() {
             const displayedNum = display.textContent;
             if (key.classList.contains('number')) {
                 console.log('Number key');
-                //if only 0 is on screen then replace it with new num
-                if (displayedNum === '0') {
+                //if only 0 is on screen or last key clicked was operator then replace it with new num
+                if (displayedNum === '0' || previousKeyType === 'operator' ) {
                     display.textContent = keyContent;
                 } else { //otherwise add new num after the existing num
                     display.textContent = displayedNum + keyContent;
                 };
+                previousKeyType = 'number';
             } else if (key.classList.contains('operator')) {
                 console.log('Operator key');
                 selectOperator(key);
-                //if only 0 is on screen or last displayed is an operator
-                if (displayedNum === '0') {
-                    display.textContent = keyContent;
-                } else { //otherwise add operator after the displayed num
-                    display.textContent = displayedNum + keyContent;
-                };
+                calculator.firstValue = displayedNum;
+                previousKeyType = 'operator';
             } else if (key.classList.contains('decimal')) {
                 console.log('Decimal key')
                 display.textContent = displayedNum + '.';
+                previousKeyType = 'decimal';
             } else if (key.classList.contains('ac')) {
+                //clear display
                 display.textContent = '';
+                //clear operator btn colour
+                operators.forEach((operator) => {
+                    operator.classList.remove('active');
+                });
                 console.log('Clear key')
+                previousKeyType = 'clear';
             } else if (key.classList.contains('calculate')) {
                 console.log('Equal key')
+                //storing the var before they are wiped off
+                const firstValue = calculator.firstValue;
+                const operator = calculator.operator;
+                const secondValue = displayedNum;
+                display.textContent = calculate(firstValue,operator,secondValue);
+                previousKeyType = 'calculate';
             } else {
                 console.log('Error')
             };
@@ -41,11 +52,29 @@ function buttonListener() {
     }));
 };
 
-function selectOperator(key) {
+function selectOperator(selectedKey) {
     operators.forEach((operator) => {
         operator.classList.remove('active');
     });
-    key.classList.add('active');
+    selectedKey.classList.add('active');
+    calculator.operator = selectedKey.textContent;
+    console.log(calculator.operator)
+};
+
+const calculate = (num1,operator,num2) => {
+    let result = '';
+    
+    if (operator === '+') {
+        result = num1 + num2;
+    } else if (operator === '-') {
+        result = num1 - num2;
+    } else if (operator === 'x') {
+        result = num1 * num2;
+    } else if (operator === '÷') {
+        result = num1 / num2;
+    };
+
+    return result;
 };
 
 buttonListener();
