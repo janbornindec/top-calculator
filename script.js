@@ -11,7 +11,7 @@ function buttonListener() {
             const keyContent = key.textContent;
             const displayedNum = display.textContent;
             if (key.classList.contains('number')) {
-                console.log('Number key');
+                console.log(keyContent);
                 //if only 0 is on screen or last key clicked was operator then replace it with new num
                 if (displayedNum === '0' || previousKeyType === 'operator' ) {
                     display.textContent = keyContent;
@@ -20,13 +20,17 @@ function buttonListener() {
                 };
                 previousKeyType = 'number';
             } else if (key.classList.contains('operator')) {
-                console.log('Operator key');
                 selectOperator(key);
                 calculator.firstValue = displayedNum;
                 previousKeyType = 'operator';
             } else if (key.classList.contains('decimal')) {
                 console.log('Decimal key')
-                display.textContent = displayedNum + '.';
+                //only allows one decimal point
+                if (displayedNum.split(/[.]/).length === 2) {
+                    display.textContent = displayedNum;
+                } else {
+                    display.textContent = displayedNum + '.';
+                }
                 previousKeyType = 'decimal';
             } else if (key.classList.contains('ac')) {
                 //clear display
