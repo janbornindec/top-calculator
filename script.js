@@ -28,6 +28,7 @@ function buttonListener() {
                     //store the current total of the first two num as temp
                     temp = calculate(calculator.firstValue,calculator.operator,calculator.secondValue);
                     console.log(temp);
+                    display.textContent = temp; //display result of the first pair of num
                 } else { //otherwise add new num after the existing num
                     display.textContent = displayedNum + keyContent;
                 };
