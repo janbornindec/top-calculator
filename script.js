@@ -64,6 +64,8 @@ function buttonListener() {
                 calculator.secondValue = undefined; //reset secondValue
                 previousKeyType = 'clear';
                 console.log('Clear key')
+            } else if (key.classList.contains('delete')) {
+                display.textContent = display.textContent.slice(0,-1);
             } else if (key.classList.contains('calculate')) {
                 console.log('Equal key')
                 removeActive();
