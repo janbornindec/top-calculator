@@ -20,7 +20,7 @@ function buttonListener() {
                     console.log("First num is " + calculator.firstValue);
                 } else if (calculator.operator === '÷' && key.textContent === '0') {
                     display.textContent = 'ERROR';
-                    clear();
+                    removeActive();
                 } else if (previousKeyType === 'operator') {
                     display.textContent = keyContent;
                     calculator.secondValue = display.textContent;
@@ -57,13 +57,16 @@ function buttonListener() {
                 }
                 previousKeyType = 'decimal';
             } else if (key.classList.contains('ac')) {
-                //clear display
+                //clear display and results
+                result = '';
                 display.textContent = '';
-                clear();
+                removeActive();
+                calculator.secondValue = undefined; //reset secondValue
                 previousKeyType = 'clear';
                 console.log('Clear key')
             } else if (key.classList.contains('calculate')) {
                 console.log('Equal key')
+                removeActive();
                 //storing the var before they are wiped off
                 const firstValue = calculator.firstValue;
                 const operator = calculator.operator;
@@ -86,13 +89,11 @@ function selectOperator(selectedKey) {
     console.log(calculator.operator)
 };
 
-function clear() {
-    result = '';
+function removeActive() {
     //clear operator btn colour
     operators.forEach((operator) => {
         operator.classList.remove('active');
     });
-    calculator.secondValue = undefined; //reset secondValue
 };
 
 const calculate = (num1,operator,num2) => {
