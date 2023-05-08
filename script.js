@@ -10,15 +10,20 @@ function buttonListener() {
             const key = e.target
             const keyContent = key.textContent;
             const displayedNum = display.textContent;
+            
             if (key.classList.contains('number')) {
                 console.log(keyContent);
                 //if only 0 is on screen or last key clicked was operator then replace it with new num
-                if (displayedNum === '0' || previousKeyType === 'operator' ) {
+                if (displayedNum === '0' || previousKeyType === 'clear') {
+                    display.textContent = keyContent;
+                    calculator.firstValue = displayedNum;
+                } else if (previousKeyType === 'operator') {
                     display.textContent = keyContent;
                     calculator.secondValue = display.textContent;
                     console.log("Cal second value is " + calculator.secondValue);
                     //store the current total of the first two num as temp
                     temp = calculate(calculator.firstValue,calculator.operator,calculator.secondValue);
+                    console.log(temp);
                 } else { //otherwise add new num after the existing num
                     display.textContent = displayedNum + keyContent;
                 };
@@ -80,18 +85,18 @@ function selectOperator(selectedKey) {
 
 const calculate = (num1,operator,num2) => {
     let result = '';
-    
+
     if (operator === '+') {
-        result = num1 + num2;
+        result = Number(num1) + Number(num2);
     } else if (operator === '-') {
-        result = num1 - num2;
+        result = Number(num1) - Number(num2);
     } else if (operator === 'x') {
-        result = num1 * num2;
+        result = Number(num1) * Number(num2);
     } else if (operator === '÷') {
-        result = num1 / num2;
+        result = Number(num1) / Number(num2);
     };
 
-    return result;
+    return result = Math.round(result * 100)/100;
 };
 
 buttonListener();
