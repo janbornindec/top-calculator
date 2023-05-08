@@ -10,7 +10,7 @@ body {
     height: 100vh;
 }
 
-.container {
+.calculator {
     margin: 0;
     padding: 2em;
     display: flex;
