@@ -154,11 +154,13 @@ function buttonListener() {
     }));
 };
 
+//select the operator
 function selectOperator(selectedKey) {
     calculator.operator = selectedKey.textContent;
     console.log(calculator.operator)
 };
 
+//apply css to the active operator 
 function setActive(selectedKey) {
     operators.forEach((operator) => {
         operator.classList.remove('active');
@@ -166,6 +168,7 @@ function setActive(selectedKey) {
     selectedKey.classList.add('active');
 };
 
+//remove active status from operators
 function removeActive() {
     //clear operator btn colour
     operators.forEach((operator) => {
@@ -173,12 +176,14 @@ function removeActive() {
     });
 };
 
+//remove all defined values
 function removeValues() {
     calculator.firstValue = undefined;
     calculator.secondValue = undefined;
     calculator.operator = undefined;
 };
 
+//calculate functions
 const calculate = (num1,operator,num2) => {
     let result = '';
 
