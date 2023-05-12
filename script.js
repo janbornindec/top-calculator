@@ -5,6 +5,70 @@ const operators = document.querySelectorAll('.operator');
 let previousKeyType; //setting a var for the last key that has been clicked
 const getTemp = () => calculate(calculator.firstValue,calculator.operator,calculator.secondValue);
 
+let displayValue = '';
+
+//update the display
+function updateDisplay() {
+    display.textContent = displayValue;
+};
+
+//remove all defined values
+function removeValues() {
+    calculator.firstValue = undefined;
+    calculator.secondValue = undefined;
+    calculator.operator = undefined;
+};
+
+//calculate functions
+const calculate = (firstNum,operator,secondNum) => {
+    let result = '';
+
+    if (operator === '+') {
+        result = Number(firstNum) + Number(secondNum);
+    } else if (operator === '-') {
+        result = Number(firstNum) - Number(secondNum);
+    } else if (operator === 'x') {
+        result = Number(firstNum) * Number(secondNum);
+    } else if (operator === '÷') {
+        result = Number(firstNum) / Number(secondNum);
+    };
+
+    return displayValue = Math.round(result * 100)/100;
+};
+
+
+function buttonListener() {
+    buttons.forEach((button) => {
+        button.addEventListener('click', (e) => {
+            const btn = e.target;
+            const btnContent = btn.textContent;
+            const displayedNum = display.textContent;
+            //if user click a number
+            if (btn.classList.contains('number')) {
+                inputNumber(btnContent);
+                updateDisplay();
+            } else if (btn.classList.contains('operator')) {
+                inputOperator(btnContent);
+            } else if (btn.classList.contains('decimal')) {
+                inputDecimal(btnContent);
+                updateDisplay();
+            } else if (btn.classList.contains('delete')) {
+                deleteNum(btnContent);
+                updateDisplay();
+            } else if (btn.classList.contains('ac')) {
+                removeActive();
+                clearDisplay();
+                updateDisplay();
+            } else if (btn.classList.contains('calculate')) {
+                calculate();
+                updateDisplay();
+            };
+        })
+    });
+};
+
+
+/*
 function buttonListener() {
     buttons.forEach((button => {
         button.addEventListener('click', (e => {
@@ -222,4 +286,4 @@ const calculate = (num1,operator,num2) => {
     return result = Math.round(result * 100)/100;
 };
 
-buttonListener();
+buttonListener();*/
