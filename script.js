@@ -110,15 +110,13 @@ function buttonListener() {
                 previousKeyType = 'operator';
             } else if (key.classList.contains('decimal')) {
                 console.log('Decimal key')
-                /*
-                //only allows one decimal point
                 if (displayedNum.split(/[.]/).length === 2) {
                     display.textContent = displayedNum;
+                } else if (previousKeyType === 'operator') {
+                    display.textContent = '0' + keyContent;
                 } else {
                     display.textContent = displayedNum + '.';
                 }
-                */
-                display.textContent = displayedNum + '.';
                 previousKeyType = 'decimal';
             } else if (key.classList.contains('ac')) {
                 //clear display and results
