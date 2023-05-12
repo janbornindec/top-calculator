@@ -19,7 +19,7 @@ function removeValues() {
     calculator.operator = undefined;
 };
 
-//calculate functions
+//calculate the total
 const calculate = (firstNum,operator,secondNum) => {
     let result = '';
 
@@ -36,16 +36,45 @@ const calculate = (firstNum,operator,secondNum) => {
     return displayValue = Math.round(result * 100)/100;
 };
 
+let firstOperator = null;
+let secondOperator = null;
+let firstNum = null;
+let secondNum = null;
+
+//when user click number keys
+function inputNum(num) {
+    //if first operator has not been declared
+    if (firstOperator === null) {
+        //if display is clear or shows zero, replace with clicked num
+        if (displayValue === '' || displayValue === 0) {
+            displayValue = num;
+        //if total of first operation is displayed, replace with clicked num
+        } else if (displayValue === firstNum) {
+            displayValue = num;
+        //else add number after displayed num
+        } else {
+            displayValue += num;
+        };
+    //if first num has been declared
+    } else {
+        //if first num s displayed, replace with clicked num
+        if (displayValue === firstNum) {
+            displayValue = num;
+        //else add number after displayed num
+        } else {
+            displayValue += num;
+        };
+    };
+};
 
 function buttonListener() {
     buttons.forEach((button) => {
         button.addEventListener('click', (e) => {
             const btn = e.target;
             const btnContent = btn.textContent;
-            const displayedNum = display.textContent;
             //if user click a number
             if (btn.classList.contains('number')) {
-                inputNumber(btnContent);
+                inputNum(btnContent);
                 updateDisplay();
             } else if (btn.classList.contains('operator')) {
                 inputOperator(btnContent);
@@ -53,7 +82,7 @@ function buttonListener() {
                 inputDecimal(btnContent);
                 updateDisplay();
             } else if (btn.classList.contains('delete')) {
-                deleteNum(btnContent);
+                inputNum(btnContent);
                 updateDisplay();
             } else if (btn.classList.contains('ac')) {
                 removeActive();
