@@ -83,8 +83,7 @@ function buttonListener() {
                         display.textContent = displayedNum + keyContent;
                     };
                 };
-            previousKeyType = 'number';
-                
+                previousKeyType = 'number';
             } else if (key.classList.contains('operator')) {
                 //set the selected operator as active
                 setActive(key);
@@ -105,18 +104,22 @@ function buttonListener() {
                     calculator.firstValue = getTemp();
                     console.log('New first num is: ' + calculator.firstValue);
                     calculator.secondValue = undefined;
-                }
+                };
                 selectOperator(key);
                 previousKeyType = 'operator';
             } else if (key.classList.contains('decimal')) {
-                console.log('Decimal key')
-                if (displayedNum.split(/[.]/).length === 2) {
-                    display.textContent = displayedNum;
-                } else if (previousKeyType === 'operator') {
+                //if the previous key was an operator, add zero before num
+                if (previousKeyType === 'operator') {
                     display.textContent = '0' + keyContent;
+                //only allow two decimal points
                 } else {
-                    display.textContent = displayedNum + '.';
-                }
+                    if (displayedNum.split(/[.]/).length === 2) {
+                        display.textContent = displayedNum;
+                    } else {
+                        display.textContent = displayedNum + '.';
+                    };
+                };
+                console.log('Decimal key')
                 previousKeyType = 'decimal';
             } else if (key.classList.contains('ac')) {
                 //clear display and results
