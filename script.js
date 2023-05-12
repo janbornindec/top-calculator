@@ -95,12 +95,13 @@ function buttonListener() {
                     calculator.firstValue = displayedNum;
                     console.log("Cal first value is " + calculator.firstValue);
                 } else if (!calculator.secondValue || calculator.secondValue === undefined) {
-                    //store the current total of the first two num as temp
-                    calculator.firstValue = display.textContent;
-                    console.log("First num is " + calculator.firstValue);
+                    //store the current displayed num as second num
+                    calculator.secondValue = display.textContent;
+                    console.log("Second num is " + calculator.secondValue);
                 } else if (calculator.secondValue) {
                     //store the current displayed num as second num
                     calculator.secondValue = display.textContent;
+                    //store the temporary total as first value
                     calculator.firstValue = getTemp();
                     console.log('New first num is: ' + calculator.firstValue);
                     calculator.secondValue = undefined;
