@@ -99,8 +99,11 @@ function buttonListener() {
                     console.log("Cal first value is " + calculator.firstValue);
                 } else if (!calculator.secondValue || calculator.secondValue === undefined) {
                     //store the current total of the first two num as temp
-                    display.textContent = calculator.firstValue;
+                    calculator.firstValue = display.textContent;
+                    console.log("First num is " + calculator.firstValue);
                 } else if (calculator.secondValue) {
+                    //store the current displayed num as second num
+                    calculator.secondValue = display.textContent;
                     calculator.firstValue = getTemp();
                     console.log('New first num is: ' + calculator.firstValue);
                     calculator.secondValue = undefined;
@@ -140,6 +143,7 @@ function buttonListener() {
                     const operator = calculator.operator;
                     const secondValue = displayedNum;
                     display.textContent = calculate(firstValue,operator,secondValue);
+                    console.log("Total is " + display.textContent);
                 }
                 //reset the value
                 removeValues();
