@@ -73,16 +73,14 @@ function buttonListener() {
                     };
                 //if user click decimal key
                 } else if (previousKeyType === 'decimal') {
-                    //if second value has not been defined yet, add zero before the clicked number
-                    if (!calculator.secondValue) {
+                    //if displayed num is only a decimal point, add zero before the num
+                    if (displayedNum === '.') {
                         display.textContent = '0.' + keyContent;
                         calculator.secondValue = display.textContent;
                         console.log('Second num is: ' + calculator.secondValue);
                     //else add number after the decimal point
                     } else {
                         display.textContent = displayedNum + keyContent;
-                        calculator.secondValue = display.textContent;
-                        console.log('Second num is: ' + calculator.secondValue);
                     };
                 };
             previousKeyType = 'number';
@@ -112,12 +110,15 @@ function buttonListener() {
                 previousKeyType = 'operator';
             } else if (key.classList.contains('decimal')) {
                 console.log('Decimal key')
+                /*
                 //only allows one decimal point
                 if (displayedNum.split(/[.]/).length === 2) {
                     display.textContent = displayedNum;
                 } else {
                     display.textContent = displayedNum + '.';
                 }
+                */
+                display.textContent = displayedNum + '.';
                 previousKeyType = 'decimal';
             } else if (key.classList.contains('ac')) {
                 //clear display and results
