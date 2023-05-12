@@ -81,6 +81,11 @@ function buttonListener() {
                     //else add number after the decimal point
                     } else {
                         display.textContent = displayedNum + keyContent;
+                        if (!calculator.secondValue) {
+                            calculator.firstValue = display.textContent;
+                        } else {
+                            calculator.secondValue = display.textContent;
+                        };
                     };
                 };
                 previousKeyType = 'number';
@@ -91,17 +96,21 @@ function buttonListener() {
                 if (!calculator.firstValue) {
                     calculator.firstValue = displayedNum;
                     console.log("Cal first value is " + calculator.firstValue);
+                //if user delete a num before using operator
+                } else if (previousKeyType === 'delete') {
+                    //set the displayed num as its value
+                    if (!calculator.secondValue) {
+                        calculator.firstValue = display.textContent;
+                        console.log("First num is " + calculator.firstValue);
+                    } else {
+                        calculator.secondValue = display.textContent;
+                        console.log("Second num is " + calculator.secondValue);
+                    };
                 } else if (previousKeyType === 'calculate') {
                     calculator.firstValue = displayedNum;
                     console.log("Cal first value is " + calculator.firstValue);
-                } else if (!calculator.secondValue || calculator.secondValue === undefined) {
-                    //store the current displayed num as second num
-                    calculator.secondValue = display.textContent;
-                    console.log("Second num is " + calculator.secondValue);
                 } else if (calculator.secondValue) {
-                    //store the current displayed num as second num
-                    calculator.secondValue = display.textContent;
-                    //store the temporary total as first value
+                    //store the current total as first num
                     calculator.firstValue = getTemp();
                     console.log('New first num is: ' + calculator.firstValue);
                     calculator.secondValue = undefined;
@@ -112,6 +121,14 @@ function buttonListener() {
                 //if the previous key was an operator, add zero before num
                 if (previousKeyType === 'operator') {
                     display.textContent = '0' + keyContent;
+                    //if this is for the second num
+                    if (!calculator.secondValue) {
+                        calculator.secondValue = display.textContent;
+                        console.log("First num is " + calculator.firstValue);
+                    } else {
+                        calculator.secondValue = display.textContent;
+                        console.log("Second num is " + calculator.secondValue);
+                    }
                 //only allow two decimal points
                 } else {
                     if (displayedNum.split(/[.]/).length === 2) {
@@ -132,6 +149,7 @@ function buttonListener() {
                 previousKeyType = 'clear';
             } else if (key.classList.contains('delete')) {
                 display.textContent = display.textContent.slice(0,-1);
+                previousKeyType = 'delete';
             } else if (key.classList.contains('calculate')) {
                 console.log('Equal key')
                 //remove the active operator css
