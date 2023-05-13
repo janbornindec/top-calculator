@@ -14,9 +14,9 @@ function updateDisplay() {
 
 //remove all defined values
 function removeValues() {
-    calculator.firstValue = undefined;
-    calculator.secondValue = undefined;
-    calculator.operator = undefined;
+    calculator.firstValue = null;
+    calculator.secondValue = null;
+    calculator.operator = null;
 };
 
 //calculate the total
@@ -41,6 +41,13 @@ let secondOperator = null;
 let firstNum = null;
 let secondNum = null;
 
+function checkStat() {
+    console.log("First num is " + firstNum);
+    console.log("Second num is " + secondNum);
+    console.log("First op is " + firstOperator);
+    console.log("Second op is " + secondOperator);
+};
+
 //when user click number keys
 function inputNum(num) {
     //if first operator has not been declared
@@ -57,13 +64,50 @@ function inputNum(num) {
         };
     //if first num has been declared
     } else {
-        //if first num s displayed, replace with clicked num
+        //if first num is displayed, replace with clicked num
         if (displayValue === firstNum) {
             displayValue = num;
         //else add number after displayed num
         } else {
             displayValue += num;
         };
+    };
+};
+
+//when user click operator keys
+function inputOperator(operator) {
+    //when an operation has been declared before this
+    if (firstOperator != null && secondOperator === null) {
+        //the display num is the second num;
+        secondNum = displayValue;
+        //calculate and display the total of the first operation
+        calculate(firstNum,firstOperator,secondNum);
+        updateDisplay();
+        //make the total as the first num and make remove second num;
+        firstNum = displayValue;
+        secondNum === null;
+        //the current operator will be the second operator
+        firstOperator = operator;
+        secondOperator = null;
+        checkStat();
+    //if both operators have been declared
+    } else if (firstOperator != null && secondOperator != null) {
+        //the display num is the second num;
+        secondNum = displayValue;
+        //calculate and display the total of the first operation
+        calculate(firstNum,secondOperator,secondNum);
+        updateDisplay();
+        //make the total as the first num;
+        firstNum = displayValue;
+        firstOperator = operator;
+        secondOperator = null;
+        secondNum = null;
+        checkStat();
+    //second number has not been declared
+    } else {
+        firstOperator = operator;
+        firstNum = displayValue;
+        checkStat();
     };
 };
 
@@ -89,13 +133,16 @@ function buttonListener() {
                 clearDisplay();
                 updateDisplay();
             } else if (btn.classList.contains('calculate')) {
-                calculate();
+                secondNum = displayValue;
+                calculate(firstNum,firstOperator,secondNum);
                 updateDisplay();
+                checkStat();
             };
         })
     });
 };
 
+buttonListener();
 
 /*
 function buttonListener() {
