@@ -144,8 +144,8 @@ function inputOperator(operator) {
 };
 
 function inputDecimal() {
-    //if displayed num is only a decimal point, or second num hasn't been declared
-    if (displayValue === '' || secondNum === null) {
+    //if displayed num is only a decimal point, or display num is first num
+    if (displayValue === '' || displayValue === firstNum) {
         displayValue = '0.';
     //else add number after the decimal point
     } else {
