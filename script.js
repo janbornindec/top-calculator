@@ -111,6 +111,18 @@ function inputOperator(operator) {
     };
 };
 
+function inputDecimal() {
+    //if displayed num is only a decimal point, or second num hasn't been declared
+    if (displayValue === '' || secondNum === null) {
+        displayValue = '0.';
+    //else add number after the decimal point
+    } else {
+        if (displayValue.split(/[.]/).length != 2) {
+            displayValue += '.';
+        };
+    };
+};
+
 function buttonListener() {
     buttons.forEach((button) => {
         button.addEventListener('click', (e) => {
