@@ -99,10 +99,19 @@ button:active {
 
 button:hover {
     cursor: pointer;
+    background-color: rgb(125, 125, 125);
+}
+
+.special:hover {
+    background-color: rgb(84, 84, 84);
 }
 
 .special:active {
     background-color: rgba(153, 152, 152, 0.763);
+}
+
+.operator:hover {
+    background-color: rgba(240, 131, 22, 0.758);
 }
 
 .operator:active {
