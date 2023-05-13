@@ -25,16 +25,20 @@ function keysListener() {
             updateDisplay();
         } else if (key.classList.contains('delete')) {
             //convert displayValue to string to slice
-            displayValue.toString();
-            displayValue = displayValue.slice(0,-1);
+            displayValue = displayValue.toString().slice(0,-1);
             updateDisplay();
         } else if (key.classList.contains('ac')) {
             removeActive();
             removeValues();
             updateDisplay();
         } else if (key.classList.contains('calculate')) {
-            secondNum = displayValue;
-            calculate(firstNum,firstOperator,secondNum);
+            //if user did not give a second number at all
+            if (!firstNum) {
+                firstNum = displayValue;
+            } else {
+                secondNum = displayValue;
+                calculate(firstNum,firstOperator,secondNum);
+            }
             removeActive();
             updateDisplay();
             checkStat();
@@ -58,7 +62,8 @@ function buttonListener() {
                 inputDecimal(btnContent);
                 updateDisplay();
             } else if (btn.classList.contains('delete')) {
-                displayValue = displayValue.slice(0,-1);
+                 //convert displayValue to string to slice
+                displayValue = displayValue.toString().slice(0,-1);
                 updateDisplay();
             } else if (btn.classList.contains('ac')) {
                 removeActive();
@@ -68,10 +73,10 @@ function buttonListener() {
                 //if user did not give a second number at all
                 if (!firstNum) {
                     firstNum = displayValue;
-                    updateDisplay();
-                };
-                secondNum = displayValue;
-                calculate(firstNum,firstOperator,secondNum);
+                } else {
+                    secondNum = displayValue;
+                    calculate(firstNum,firstOperator,secondNum);
+                }
                 removeActive();
                 updateDisplay();
                 checkStat();
