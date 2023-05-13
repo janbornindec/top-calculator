@@ -8,28 +8,48 @@ body {
     margin: 0;
     width: 100vw;
     height: 100vh;
+    background-color: rgb(34, 34, 34);
 }
+
+.header {
+    display: flex;
+    flex-direction: row;
+    font-size: 8px;
+    justify-content: left;
+    max-height: 100px;
+    align-items: center;
+    padding-bottom: 20px;
+    color: rgb(251, 225, 237);
+}
+
+#logo {
+    width: 100px; /* width of container */
+    height: 70px; /* height of container */
+    object-fit: cover;
+}
+
 
 .calculator {
     margin: 0;
-    padding: 10px;
+    padding: 1.5em;
     display: flex;
     flex-grow: 1;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: flex-start;
     border-radius: 1em;
-    background-color: rgb(139, 139, 139);
+    background-image: url(cowprint.jpeg);
+    background-size: cover;
     width: 280px;
     height: 300px;
     max-width: 380px;
-    max-height: 400px;
+    max-height: 450px;
     gap: 20px;
     box-shadow: 3px 3px 5px 2px black;
 }
 
 .display_container {
-    background-color: rgb(80, 80, 80);
+    background-color: rgb(244, 250, 255);
     border-radius: 1em;
     box-shadow: inset 0 0 5px black;
     width: 100%;
@@ -44,6 +64,7 @@ body {
     width: 100%;
     height: 70%;
     justify-content: center;
+    box-shadow: 0px 0px 1px 1px rgba(99, 99, 99, 0.455);
 }
 
 .left {
@@ -83,13 +104,14 @@ button {
     padding: 8px;
     display: flex;
     justify-content: center;
+    border-radius: 2px;
     align-items: center;
     flex-direction: row;
-    background-color: rgb(168, 168, 168);
-    border: 0.5px solid;
+    background-color: rgb(255, 223, 240);
+    border: 0 solid;
     height: 100%;
     width: 100%;
-    box-shadow: 0px 0px 1px 2px rgba(99, 99, 99, 0.455);
+    box-shadow: 0px 0px 1px 1px rgba(99, 99, 99, 0.455);
     font-size: 1.2em;
 }
 
@@ -99,11 +121,11 @@ button:active {
 
 button:hover {
     cursor: pointer;
-    background-color: rgb(125, 125, 125);
+    background-color: rgb(255, 186, 222);
 }
 
 .special:hover {
-    background-color: rgb(84, 84, 84);
+    background-color: rgb(252, 146, 213);
 }
 
 .special:active {
@@ -111,7 +133,7 @@ button:hover {
 }
 
 .operator:hover {
-    background-color: rgba(240, 131, 22, 0.758);
+    background-color: rgb(250, 121, 121);
 }
 
 .operator:active {
@@ -134,15 +156,15 @@ p {
     padding: 10px 10px;
     font-size: 2em;
     font-family: 'Orbitron', sans-serif;
-    color: rgb(227, 227, 227)
+    color: rgb(233, 128, 181)
 }
 
 .operator {
-    background-color: rgb(255, 175, 38);
+    background-color: rgb(255, 98, 98);
 }
 
 .special {
-    background-color: rgba(102, 100, 100, 0.511);
+    background-color: rgb(232, 137, 197);
 }
 
 .active {
