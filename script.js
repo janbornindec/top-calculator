@@ -9,7 +9,7 @@ let firstNum = null;
 let secondNum = null;
 let displayValue = '';
 
-function keysListener() {
+function keyboardListener() {
     document.addEventListener('keydown', (e) => {
         const key = document.querySelector(`button[data-key='${e.key}']`);
         const keyContent = key.textContent;
@@ -35,10 +35,11 @@ function keysListener() {
             //if user did not give a second number at all
             if (!firstNum) {
                 firstNum = displayValue;
-            } else {
+            //if user chooses an operator before cal
+            } else if (secondNum != null) {
                 secondNum = displayValue;
                 calculate(firstNum,firstOperator,secondNum);
-            }
+            };
             removeActive();
             updateDisplay();
             checkStat();
@@ -73,10 +74,11 @@ function buttonListener() {
                 //if user did not give a second number at all
                 if (!firstNum) {
                     firstNum = displayValue;
-                } else {
+                //if user chooses an operator before cal
+                } else if (secondNum != null) {
                     secondNum = displayValue;
                     calculate(firstNum,firstOperator,secondNum);
-                }
+                };
                 removeActive();
                 updateDisplay();
                 checkStat();
@@ -117,10 +119,15 @@ function removeActive() {
 
 //for debugging
 function checkStat() {
-    console.log("First num is " + firstNum);
-    console.log("Second num is " + secondNum);
-    console.log("First op is " + firstOperator);
-    console.log("Second op is " + secondOperator);
+    //remove previous log lines
+    console.clear();
+    console.log("Equation = " + firstNum + ' ' + firstOperator + ' ' + secondNum);
+    console.log(`
+    \t 1st num: ${firstNum}
+    \t 2nd num: ${secondNum}
+    \t 1st opt: ${firstOperator}
+    \t 2nd opt: ${secondOperator}
+    `);
 };
 
 //when user click number keys
@@ -160,12 +167,12 @@ function inputOperator(operator) {
         updateDisplay();
         //make the total as the first num and make remove second num;
         firstNum = displayValue;
-        secondNum === null;
+        secondNum = null;
         //the current operator will be the second operator
         firstOperator = operator;
         secondOperator = null;
         checkStat();
-    //if both operators have been declared
+    /*if both operators have been declared
     } else if (firstOperator != null && secondOperator != null) {
         //the display num is the second num;
         secondNum = displayValue;
@@ -177,7 +184,7 @@ function inputOperator(operator) {
         firstOperator = operator;
         secondOperator = null;
         secondNum = null;
-        checkStat();
+        checkStat();*/
     //second number has not been declared
     } else {
         firstOperator = operator;
@@ -216,4 +223,4 @@ const calculate = (firstNum,operator,secondNum) => {
 };
 
 buttonListener();
-keysListener();
+keyboardListener();
