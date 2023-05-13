@@ -35,11 +35,10 @@ function keyboardListener() {
             //if user did not give a second number at all
             if (!firstNum) {
                 firstNum = displayValue;
-            //if user chooses an operator before cal
-            } else if (secondNum != null) {
+            } else {
                 secondNum = displayValue;
                 calculate(firstNum,firstOperator,secondNum);
-            };
+            }
             removeActive();
             updateDisplay();
             checkStat();
@@ -74,11 +73,10 @@ function buttonListener() {
                 //if user did not give a second number at all
                 if (!firstNum) {
                     firstNum = displayValue;
-                //if user chooses an operator before cal
-                } else if (secondNum != null) {
+                } else {
                     secondNum = displayValue;
                     calculate(firstNum,firstOperator,secondNum);
-                };
+                }
                 removeActive();
                 updateDisplay();
                 checkStat();
@@ -172,7 +170,7 @@ function inputOperator(operator) {
         firstOperator = operator;
         secondOperator = null;
         checkStat();
-    /*if both operators have been declared
+    //if both operators have been declared
     } else if (firstOperator != null && secondOperator != null) {
         //the display num is the second num;
         secondNum = displayValue;
@@ -184,7 +182,7 @@ function inputOperator(operator) {
         firstOperator = operator;
         secondOperator = null;
         secondNum = null;
-        checkStat();*/
+        checkStat();
     //second number has not been declared
     } else {
         firstOperator = operator;
