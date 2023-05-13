@@ -24,6 +24,8 @@ function keysListener() {
             inputDecimal(keyContent);
             updateDisplay();
         } else if (key.classList.contains('delete')) {
+            //convert displayValue to string to slice
+            displayValue.toString();
             displayValue = displayValue.slice(0,-1);
             updateDisplay();
         } else if (key.classList.contains('ac')) {
