@@ -9,6 +9,37 @@ let firstNum = null;
 let secondNum = null;
 let displayValue = '';
 
+function keysListener() {
+    document.addEventListener('keydown', (e) => {
+        const key = document.querySelector(`button[data-key='${e.key}']`);
+        const keyContent = key.textContent;
+        //if user click a number
+        if (key.classList.contains('number')) {
+            inputNum(keyContent);
+            updateDisplay();
+        } else if (key.classList.contains('operator')) {
+            inputOperator(keyContent);
+            setActive(key);
+        } else if (key.classList.contains('decimal')) {
+            inputDecimal(keyContent);
+            updateDisplay();
+        } else if (key.classList.contains('delete')) {
+            displayValue = displayValue.slice(0,-1);
+            updateDisplay();
+        } else if (key.classList.contains('ac')) {
+            removeActive();
+            removeValues();
+            updateDisplay();
+        } else if (key.classList.contains('calculate')) {
+            secondNum = displayValue;
+            calculate(firstNum,firstOperator,secondNum);
+            removeActive();
+            updateDisplay();
+            checkStat();
+        };
+    });
+};
+
 function buttonListener() {
     buttons.forEach((button) => {
         button.addEventListener('click', (e) => {
@@ -32,6 +63,11 @@ function buttonListener() {
                 removeValues();
                 updateDisplay();
             } else if (btn.classList.contains('calculate')) {
+                //if user did not give a second number at all
+                if (!firstNum) {
+                    firstNum = displayValue;
+                    updateDisplay();
+                };
                 secondNum = displayValue;
                 calculate(firstNum,firstOperator,secondNum);
                 removeActive();
@@ -173,3 +209,4 @@ const calculate = (firstNum,operator,secondNum) => {
 };
 
 buttonListener();
+keysListener();
