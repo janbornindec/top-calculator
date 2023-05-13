@@ -1,46 +1,78 @@
-const calculator = document.querySelector('.calculator');
 const buttons = document.querySelectorAll('button');
 const display = document.querySelector('.display');
 const operators = document.querySelectorAll('.operator');
-let previousKeyType; //setting a var for the last key that has been clicked
-const getTemp = () => calculate(calculator.firstValue,calculator.operator,calculator.secondValue);
 
+//set default as null
+let firstOperator = null;
+let secondOperator = null;
+let firstNum = null;
+let secondNum = null;
 let displayValue = '';
+
+function buttonListener() {
+    buttons.forEach((button) => {
+        button.addEventListener('click', (e) => {
+            const btn = e.target;
+            const btnContent = btn.textContent;
+            //if user click a number
+            if (btn.classList.contains('number')) {
+                inputNum(btnContent);
+                updateDisplay();
+            } else if (btn.classList.contains('operator')) {
+                inputOperator(btnContent);
+                setActive(btn);
+            } else if (btn.classList.contains('decimal')) {
+                inputDecimal(btnContent);
+                updateDisplay();
+            } else if (btn.classList.contains('delete')) {
+                displayValue = displayValue.slice(0,-1);
+                updateDisplay();
+            } else if (btn.classList.contains('ac')) {
+                removeActive();
+                removeValues();
+                updateDisplay();
+            } else if (btn.classList.contains('calculate')) {
+                secondNum = displayValue;
+                calculate(firstNum,firstOperator,secondNum);
+                removeActive();
+                updateDisplay();
+                checkStat();
+            };
+        })
+    });
+};
 
 //update the display
 function updateDisplay() {
     display.textContent = displayValue;
 };
 
-//remove all defined values
+//reset all values
 function removeValues() {
-    calculator.firstValue = null;
-    calculator.secondValue = null;
-    calculator.operator = null;
+    displayValue = '';
+    firstNum = null;
+    secondNum = null;
+    firstOperator = null;
+    secondOperator = null;
 };
 
-//calculate the total
-const calculate = (firstNum,operator,secondNum) => {
-    let result = '';
-
-    if (operator === '+') {
-        result = Number(firstNum) + Number(secondNum);
-    } else if (operator === '-') {
-        result = Number(firstNum) - Number(secondNum);
-    } else if (operator === 'x') {
-        result = Number(firstNum) * Number(secondNum);
-    } else if (operator === '÷') {
-        result = Number(firstNum) / Number(secondNum);
-    };
-
-    return displayValue = Math.round(result * 100)/100;
+//apply css to the active operator 
+function setActive(btn) {
+    operators.forEach((operator) => {
+        operator.classList.remove('active');
+    });
+    btn.classList.add('active');
 };
 
-let firstOperator = null;
-let secondOperator = null;
-let firstNum = null;
-let secondNum = null;
+//remove active status from operators
+function removeActive() {
+    //clear operator btn colour
+    operators.forEach((operator) => {
+        operator.classList.remove('active');
+    });
+};
 
+//for debugging
 function checkStat() {
     console.log("First num is " + firstNum);
     console.log("Second num is " + secondNum);
@@ -123,255 +155,21 @@ function inputDecimal() {
     };
 };
 
-function buttonListener() {
-    buttons.forEach((button) => {
-        button.addEventListener('click', (e) => {
-            const btn = e.target;
-            const btnContent = btn.textContent;
-            //if user click a number
-            if (btn.classList.contains('number')) {
-                inputNum(btnContent);
-                updateDisplay();
-            } else if (btn.classList.contains('operator')) {
-                inputOperator(btnContent);
-            } else if (btn.classList.contains('decimal')) {
-                inputDecimal(btnContent);
-                updateDisplay();
-            } else if (btn.classList.contains('delete')) {
-                inputNum(btnContent);
-                updateDisplay();
-            } else if (btn.classList.contains('ac')) {
-                removeActive();
-                clearDisplay();
-                updateDisplay();
-            } else if (btn.classList.contains('calculate')) {
-                secondNum = displayValue;
-                calculate(firstNum,firstOperator,secondNum);
-                updateDisplay();
-                checkStat();
-            };
-        })
-    });
-};
-
-buttonListener();
-
-/*
-function buttonListener() {
-    buttons.forEach((button => {
-        button.addEventListener('click', (e => {
-            const key = e.target
-            const keyContent = key.textContent;
-            const displayedNum = display.textContent;
-            
-            if (key.classList.contains('number')) {
-                console.log(keyContent);
-                //if this is the first number
-                if (!calculator.firstValue) {
-                    //if user typing decimal before putting any number, add zero before dot
-                    if (previousKeyType === 'decimal') {
-                        display.textContent = '0.' + keyContent;
-                        calculator.firstValue = display.textContent;
-                        console.log('First num is: ' + calculator.firstValue);
-                    } else {
-                        //display the number clicked on screen
-                        display.textContent = keyContent;
-                        calculator.firstValue = display.textContent;
-                        console.log('First num is: ' + calculator.firstValue);
-                    };
-                //if a number has been entered before this
-                } else if (previousKeyType === 'number') {
-                    //if this is for the other digits of first number
-                    if (!calculator.secondValue) {
-                        //if only 0 is on screen then replace it with new num
-                        if (displayedNum === '0') {
-                            display.textContent = keyContent;
-                            calculator.firstValue = display.textContent;
-                            console.log('First num is: ' + calculator.firstValue);
-                        } else {
-                            //add new num after the existing num on screen
-                            display.textContent = displayedNum + keyContent;
-                            //set the first value as the number on screen
-                            calculator.firstValue = display.textContent;
-                            console.log('First num is: ' + calculator.firstValue);
-                        };
-                    //if this is for the other digits of second number
-                    } else {
-                        //add new num after the existing num on screen
-                        display.textContent = displayedNum + keyContent;
-                        //set the second value as the number on screen
-                        calculator.secondValue = display.textContent;
-                        console.log("Second num is " + calculator.secondValue);
-                    };
-                } else if (previousKeyType === 'operator') {
-                    //if user try to divide by zero
-                    if (calculator.operator === '÷' && key.textContent === '0') {
-                        display.textContent = 'ERROR';
-                        //reset everything
-                        removeActive();
-                        removeValues();
-                    } else {
-                        if (!calculator.secondValue) {
-                            //display the number clicked on screen
-                            display.textContent = keyContent;
-                            //set the second value as the number on screen
-                            calculator.secondValue = display.textContent;
-                            console.log("Second num is " + calculator.secondValue);
-                        } else {
-                            calculator.firstValue = getTemp();
-                            console.log('New first num is: ' + calculator.firstValue);
-                            calculator.secondValue = undefined;
-                        };
-                    };
-                //if user click decimal key
-                } else if (previousKeyType === 'decimal') {
-                    //if displayed num is only a decimal point, add zero before the num
-                    if (displayedNum === '.') {
-                        display.textContent = '0.' + keyContent;
-                        calculator.secondValue = display.textContent;
-                        console.log('Second num is: ' + calculator.secondValue);
-                    //else add number after the decimal point
-                    } else {
-                        display.textContent = displayedNum + keyContent;
-                        if (!calculator.secondValue) {
-                            calculator.firstValue = display.textContent;
-                        } else {
-                            calculator.secondValue = display.textContent;
-                        };
-                    };
-                };
-                previousKeyType = 'number';
-            } else if (key.classList.contains('operator')) {
-                //set the selected operator as active
-                setActive(key);
-                //taking in the result from last equation as the first value
-                if (!calculator.firstValue) {
-                    calculator.firstValue = displayedNum;
-                    console.log("Cal first value is " + calculator.firstValue);
-                //if user delete a num before using operator
-                } else if (previousKeyType === 'delete') {
-                    //set the displayed num as its value
-                    if (!calculator.secondValue) {
-                        calculator.firstValue = display.textContent;
-                        console.log("First num is " + calculator.firstValue);
-                    } else {
-                        calculator.secondValue = display.textContent;
-                        console.log("Second num is " + calculator.secondValue);
-                    };
-                } else if (previousKeyType === 'calculate') {
-                    calculator.firstValue = displayedNum;
-                    console.log("Cal first value is " + calculator.firstValue);
-                } else if (calculator.secondValue) {
-                    //store the current total as first num
-                    calculator.firstValue = getTemp();
-                    console.log('New first num is: ' + calculator.firstValue);
-                    calculator.secondValue = undefined;
-                };
-                selectOperator(key);
-                previousKeyType = 'operator';
-            } else if (key.classList.contains('decimal')) {
-                //if the previous key was an operator, add zero before num
-                if (previousKeyType === 'operator') {
-                    display.textContent = '0' + keyContent;
-                    //if this is for the second num
-                    if (!calculator.secondValue) {
-                        calculator.secondValue = display.textContent;
-                        console.log("First num is " + calculator.firstValue);
-                    } else {
-                        calculator.secondValue = display.textContent;
-                        console.log("Second num is " + calculator.secondValue);
-                    }
-                //only allow two decimal points
-                } else {
-                    if (displayedNum.split(/[.]/).length === 2) {
-                        display.textContent = displayedNum;
-                    } else {
-                        display.textContent = displayedNum + '.';
-                    };
-                };
-                console.log('Decimal key')
-                previousKeyType = 'decimal';
-            } else if (key.classList.contains('ac')) {
-                //clear display and results
-                result = '';
-                display.textContent = '';
-                removeActive();
-                removeValues();
-                console.log('Clear key')
-                previousKeyType = 'clear';
-            } else if (key.classList.contains('delete')) {
-                display.textContent = display.textContent.slice(0,-1);
-                previousKeyType = 'delete';
-            } else if (key.classList.contains('calculate')) {
-                console.log('Equal key')
-                //remove the active operator css
-                removeActive();
-                //if user did not give second number then show the displayed number again
-                if (!calculator.secondValue) {
-                    display.textContent = displayedNum;
-                //otherwise calculate using the two numbers
-                } else {
-                    //storing the var before they are wiped off
-                    const firstValue = calculator.firstValue;
-                    const operator = calculator.operator;
-                    const secondValue = displayedNum;
-                    display.textContent = calculate(firstValue,operator,secondValue);
-                    console.log("Total is " + display.textContent);
-                }
-                //reset the value
-                removeValues();
-                previousKeyType = 'calculate';
-            } else {
-                console.log('Error')
-            };
-        }));
-    }));
-};
-
-//select the operator
-function selectOperator(selectedKey) {
-    calculator.operator = selectedKey.textContent;
-    console.log(calculator.operator)
-};
-
-//apply css to the active operator 
-function setActive(selectedKey) {
-    operators.forEach((operator) => {
-        operator.classList.remove('active');
-    });
-    selectedKey.classList.add('active');
-};
-
-//remove active status from operators
-function removeActive() {
-    //clear operator btn colour
-    operators.forEach((operator) => {
-        operator.classList.remove('active');
-    });
-};
-
-//remove all defined values
-function removeValues() {
-    calculator.firstValue = undefined;
-    calculator.secondValue = undefined;
-    calculator.operator = undefined;
-};
-
-//calculate functions
-const calculate = (num1,operator,num2) => {
+//calculate the total
+const calculate = (firstNum,operator,secondNum) => {
     let result = '';
 
     if (operator === '+') {
-        result = Number(num1) + Number(num2);
+        result = Number(firstNum) + Number(secondNum);
     } else if (operator === '-') {
-        result = Number(num1) - Number(num2);
+        result = Number(firstNum) - Number(secondNum);
     } else if (operator === 'x') {
-        result = Number(num1) * Number(num2);
+        result = Number(firstNum) * Number(secondNum);
     } else if (operator === '÷') {
-        result = Number(num1) / Number(num2);
+        result = Number(firstNum) / Number(secondNum);
     };
 
-    return result = Math.round(result * 100)/100;
+    return displayValue = Math.round(result * 100)/100;
 };
 
-buttonListener();*/
+buttonListener();
