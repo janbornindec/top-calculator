@@ -9,40 +9,75 @@ let firstNum = null;
 let secondNum = null;
 let displayValue = '';
 
+function cOperation(vkey){
+    //if user click a number
+    if (vkey.classList.contains('number')) {
+        inputNum(vkey.textContent);
+        updateDisplay();
+    } else if (vkey.classList.contains('operator')) {
+        inputOperator(vkey.textContent);
+        setActive(vkey);
+    } else if (vkey.classList.contains('decimal')) {
+        inputDecimal(vkey.textContent);
+        updateDisplay();
+    } else if (vkey.classList.contains('delete')) {
+        //convert displayValue to string to slice
+        displayValue = displayValue.toString().slice(0,-1);
+        updateDisplay();
+    } else if (vkey.classList.contains('ac')) {
+        removeActive();
+        removeValues();
+        updateDisplay();
+    } else if (vkey.classList.contains('calculate')) {
+        //if user did not give a second number at all
+        if (!firstNum) {
+            firstNum = displayValue;
+        } else {
+            secondNum = displayValue;
+            calculate(firstNum,firstOperator,secondNum);
+        }
+        removeActive();
+        updateDisplay();
+        checkStat();
+    };
+}
+
+
 function keyboardListener() {
     document.addEventListener('keydown', (e) => {
         const key = document.querySelector(`button[data-key='${e.key}']`);
-        const keyContent = key.textContent;
-        //if user click a number
-        if (key.classList.contains('number')) {
-            inputNum(keyContent);
-            updateDisplay();
-        } else if (key.classList.contains('operator')) {
-            inputOperator(keyContent);
-            setActive(key);
-        } else if (key.classList.contains('decimal')) {
-            inputDecimal(keyContent);
-            updateDisplay();
-        } else if (key.classList.contains('delete')) {
-            //convert displayValue to string to slice
-            displayValue = displayValue.toString().slice(0,-1);
-            updateDisplay();
-        } else if (key.classList.contains('ac')) {
-            removeActive();
-            removeValues();
-            updateDisplay();
-        } else if (key.classList.contains('calculate')) {
-            //if user did not give a second number at all
-            if (!firstNum) {
-                firstNum = displayValue;
-            } else {
-                secondNum = displayValue;
-                calculate(firstNum,firstOperator,secondNum);
-            }
-            removeActive();
-            updateDisplay();
-            checkStat();
-        };
+        cOperation(key);
+        // const keyContent = key.textContent;
+        // //if user click a number
+        // if (key.classList.contains('number')) {
+        //     inputNum(keyContent);
+        //     updateDisplay();
+        // } else if (key.classList.contains('operator')) {
+        //     inputOperator(keyContent);
+        //     setActive(key);
+        // } else if (key.classList.contains('decimal')) {
+        //     inputDecimal(keyContent);
+        //     updateDisplay();
+        // } else if (key.classList.contains('delete')) {
+        //     //convert displayValue to string to slice
+        //     displayValue = displayValue.toString().slice(0,-1);
+        //     updateDisplay();
+        // } else if (key.classList.contains('ac')) {
+        //     removeActive();
+        //     removeValues();
+        //     updateDisplay();
+        // } else if (key.classList.contains('calculate')) {
+        //     //if user did not give a second number at all
+        //     if (!firstNum) {
+        //         firstNum = displayValue;
+        //     } else {
+        //         secondNum = displayValue;
+        //         calculate(firstNum,firstOperator,secondNum);
+        //     }
+        //     removeActive();
+        //     updateDisplay();
+        //     checkStat();
+        // };
     });
 };
 
@@ -50,37 +85,38 @@ function buttonListener() {
     buttons.forEach((button) => {
         button.addEventListener('click', (e) => {
             const btn = e.target;
-            const btnContent = btn.textContent;
-            //if user click a number
-            if (btn.classList.contains('number')) {
-                inputNum(btnContent);
-                updateDisplay();
-            } else if (btn.classList.contains('operator')) {
-                inputOperator(btnContent);
-                setActive(btn);
-            } else if (btn.classList.contains('decimal')) {
-                inputDecimal(btnContent);
-                updateDisplay();
-            } else if (btn.classList.contains('delete')) {
-                 //convert displayValue to string to slice
-                displayValue = displayValue.toString().slice(0,-1);
-                updateDisplay();
-            } else if (btn.classList.contains('ac')) {
-                removeActive();
-                removeValues();
-                updateDisplay();
-            } else if (btn.classList.contains('calculate')) {
-                //if user did not give a second number at all
-                if (!firstNum) {
-                    firstNum = displayValue;
-                } else {
-                    secondNum = displayValue;
-                    calculate(firstNum,firstOperator,secondNum);
-                }
-                removeActive();
-                updateDisplay();
-                checkStat();
-            };
+            cOperation(btn);
+            // const btnContent = btn.textContent;
+            // //if user click a number
+            // if (btn.classList.contains('number')) {
+            //     inputNum(btnContent);
+            //     updateDisplay();
+            // } else if (btn.classList.contains('operator')) {
+            //     inputOperator(btnContent);
+            //     setActive(btn);
+            // } else if (btn.classList.contains('decimal')) {
+            //     inputDecimal(btnContent);
+            //     updateDisplay();
+            // } else if (btn.classList.contains('delete')) {
+            //      //convert displayValue to string to slice
+            //     displayValue = displayValue.toString().slice(0,-1);
+            //     updateDisplay();
+            // } else if (btn.classList.contains('ac')) {
+            //     removeActive();
+            //     removeValues();
+            //     updateDisplay();
+            // } else if (btn.classList.contains('calculate')) {
+            //     //if user did not give a second number at all
+            //     if (!firstNum) {
+            //         firstNum = displayValue;
+            //     } else {
+            //         secondNum = displayValue;
+            //         calculate(firstNum,firstOperator,secondNum);
+            //     }
+            //     removeActive();
+            //     updateDisplay();
+            //     checkStat();
+            // };
         })
     });
 };
