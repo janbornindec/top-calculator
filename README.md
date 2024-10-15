@@ -1,5 +1,6 @@
 # top-calculator
 The Odin Project Foundation Course's final project
+https://janbornindec.github.io/top-calculator/
 
 What have I learned:
 - Applying loops to events
